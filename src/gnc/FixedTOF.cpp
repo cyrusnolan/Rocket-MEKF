@@ -34,11 +34,11 @@ void FixedTOF(const Vector3d &r0, const Vector3d &v0, const double &tof,
 
   OptimizationProblem socp;
   size_t T = time_horizon;
-  VectorX z = socp.addVariable("z", T + 1);
-  Scalar q = socp.addVariable("q");
-  MatrixX x = socp.addVariable("x", 6, T + 1);
-  MatrixX u = socp.addVariable("u", 3, T + 1);
-  VectorX s = socp.addVariable("s", T + 1);
+  cvx::VectorX z = socp.addVariable("z", T + 1);
+  cvx::Scalar q = socp.addVariable("q");
+  cvx::MatrixX x = socp.addVariable("x", 6, T + 1);
+  cvx::MatrixX u = socp.addVariable("u", 3, T + 1);
+  cvx::VectorX s = socp.addVariable("s", T + 1);
 
   // Initial and Terminal Constraints
   socp.addConstraint(equalTo(x.col(0), par(x0)));
