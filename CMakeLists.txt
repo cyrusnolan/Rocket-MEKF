@@ -7,7 +7,7 @@ set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-list(APPEND CMAKE_MODULE_PATH "/Users/govindchari/Desktop/git/nova/nsim/lib/eigen/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/lib/eigen/cmake")
 find_package (Eigen3 3.3 REQUIRED NO_MODULE)
  
 include_directories("include/")
@@ -28,6 +28,6 @@ add_executable(nsim
 
 set(ENABLE_OSQP TRUE)
 set(ENABLE_ECOS TRUE)
-add_subdirectory(lib/epigraph)
+add_subdirectory(lib/Epigraph)
 
 target_link_libraries (nsim Eigen3::Eigen epigraph)
