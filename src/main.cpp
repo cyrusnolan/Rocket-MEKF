@@ -24,8 +24,6 @@ void saveData(std::string fileName, MatrixXd  matrix)
 }
 
 int main() {
-  MonteCarlo(200);
-  /*
   Matrix<double, sim::num_states_6DOF, 1> z0;  
   Vector3d r0;
   Vector4d q0;
@@ -48,11 +46,4 @@ int main() {
   auto stop = high_resolution_clock::now();
   auto duration = duration_cast<milliseconds>(stop - start);
   std::cout << duration.count() << std::endl;
-
-  FixedTOF(r0, v0, 43, m0, data);
-  saveData("pos", data.x_sol);
-  saveData("u", data.u_sol);
-  saveData("z", data.z_sol);
-  */
 }
-

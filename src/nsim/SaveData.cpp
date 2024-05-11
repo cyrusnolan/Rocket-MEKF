@@ -1,8 +1,10 @@
+#include <iomanip>  // Include this at the top of your file
 #include "nsim/SaveData.hpp"
 #include "gnc/constants.hpp"
 
 void SaveData(const std::vector<Eigen::Matrix<double, 15, 1>> &data) {
-  std::ofstream output_file("./results/fc_data.csv");
+  std::ofstream output_file("../analysis/fc_data.csv");
+  output_file << std::setprecision(15);
   int j = 1;
   std::for_each(data.begin(), data.end(), [&](auto const &x) {
     output_file << FlightComputer::dt * j;
@@ -19,7 +21,8 @@ void SaveData(const std::vector<Eigen::Matrix<double, 15, 1>> &data) {
 }
 
 void SaveData(const std::vector<Eigen::Matrix<double, 20, 1>> &data) {
-  std::ofstream output_file("./results/sim_data.csv");
+  std::ofstream output_file("../analysis/sim_data.csv");
+  output_file << std::setprecision(15);
   int j = 1;
   std::for_each(data.begin(), data.end(), [&](auto const &x) {
     output_file << sim::h * j;
