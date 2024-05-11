@@ -35,13 +35,7 @@ def crassidis(q: np.ndarray, r:np.ndarray):
 
 def rk4(X: np.ndarray, F: np.ndarray, M: np.ndarray, T: float, h: float,
         f: Callable[[np.ndarray, np.ndarray, np.ndarray, float], np.ndarray]):
-    Fx = F[0].item()
-    Fy = F[1].item()
-    Fz = F[2].item()
-    x = X[0].item()
-    y = X[1].item()
-    z = X[2].item()
-    m = X[13].item()
+
     k1 = f(X, F, M, T)              # f(t, X)
     k2 = f(X + h*k1/2, F, M, T)     # f(t + h/2, X + h*k1/2)
     k3 = f(X + h*k2/2, F, M, T)     # f(t + h/2, X + h*k2/2)
