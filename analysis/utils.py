@@ -62,3 +62,15 @@ def rk4(f: Callable[[np.ndarray, Any], np.ndarray], X: np.ndarray, dt: float, *a
     k3 = f(X + dt*k2/2, *args)      # f(t + h/2, X + h*k2/2)
     k4 = f(X + dt*k3, *args)        # f(t + h, X + h*k3)
     return X + dt/6*(k1 + 2*k2 + 2*k3 +k4)
+
+# def quat2euler(q: np.ndarray):
+#     A313 = A(q)
+#     th = np.arccos(A313[2,2])
+#     if np.sin(th) < 0:
+#         sigma = -1
+#     else:
+#         sigma = 1
+
+#     phi = np.arctan2(sigma*A313[2,0], -sigma*A313[2,1])
+#     psi = np.arctan2(sigma*A313[0,2], sigma*A313[1,2])
+#     return phi, th, psi

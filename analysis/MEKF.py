@@ -22,9 +22,6 @@ X_sim = np.vstack([r_sim, q_sim, v_sim, w_sim, m_sim])
 thrust = fc_data[7:8,:]
 forces = sim_data[15:18,:]
 moments = sim_data[18:21,:]
-# process noise - acts on all forces, moments about body axes 1 and 2 (not long axis)
-sig_w = 3000
-Q = sig_w**2 * np.eye(5)
 
 ##### Create Measurements
 # vector measurement 1
@@ -37,8 +34,8 @@ Z_v1_clean = np.zeros_like(Z_v1)
 
 # vector measurement 2
 r_v2 = np.zeros([3,1])
-r_v2[:,0] = (np.sqrt(2)/2, np.sqrt(2)/2, 0)
-sig_v2 = 0.05
+r_v2[:,0] = (0, 1, 0)
+sig_v2 = 0.005
 R_v2 = sig_v2**2 * np.eye(3)
 Z_v2 = np.zeros([3, nk])
 Z_v2_clean = np.zeros_like(Z_v2)
@@ -77,8 +74,7 @@ q0[:,0] = (1, 0, 0, 0)
 v0[:,0] = (50, 70, -75)
 w0[:,0] = (0, 0, 0)
 m0 = m_fuel + m_dry
-X0 = np.vstack([r0, q0, v0, w0, m0])
-P0 = np.diag([0.2, 0.2, 0.2, 0.1, 0.1, 0.1, 100, 100, 100, 20, 20, 20])
+P0 = np.diag([0.01, 0.01, 0.01, 0.001, 0.001, 0.001, 100, 100, 100, 20, 20, 20])
 
 ##### run MEKF
 # initialize states
@@ -108,9 +104,12 @@ Pp = np.zeros_like(Pu)
 Pp[:,:,0] = P0
 
 # initialize process noise
-nw = 5
+nw = 8
+sig_w = 3000
+Q = block_diag(sig_w**2 * np.eye(5), R_acc)
 G = np.zeros([nx,nw])
-G[3:5,0:2] = np.eye(2)
+G[3:5,0:2] = np.diag([1, 1])
+G[9:12,5:8] = np.eye(3)
 
 # initialize measurements
 nz = 12
@@ -154,7 +153,7 @@ for k in range(nk):
     # propagate
     if k < nk-1:
         thrust_idx = int(np.floor(k/10))
-        qp[:,[k+1]] = rk4(qdot, qu[:,[k]], dt, Z_rg[:,[k]])
+        qp[:,[k+1]] = rk4(qdot, qu[:,[k]], dt, wu[:,[k]])
         wp[:,[k+1]] = rk4(wdot, wu[:,[k]], dt, moments)
         rp[:,[k+1]] = rk4(rdot, ru[:,[k]], dt, vu[:,[k]])
         vp[:,[k+1]] = rk4(vdot, vu[:,[k]], dt, Z_acc[:,[k]], m_sim[0,k])
