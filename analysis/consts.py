@@ -1,15 +1,15 @@
 import numpy as np
 
 freq = 10
-h = 1 / freq
+dt = 1 / freq
 
 # massprop
 m_dry = 25600.0
 m_fuel = 10000.0
 length = 20.0
 radius = 1.85928
-I1 = 0.25*(m_dry+m_fuel)*radius*radius+(1.0/12.0)*(m_dry+m_fuel)*(2*length*2*length);
-I2 = 0.25*(m_dry+m_fuel)*radius*radius+(1.0/12.0)*(m_dry+m_fuel)*(2*length*2*length);
+I1 = 0.25*(m_dry+m_fuel)*radius*radius+(1.0/12.0)*(m_dry+m_fuel)*(2*length*2*length)
+I2 = 0.25*(m_dry+m_fuel)*radius*radius+(1.0/12.0)*(m_dry+m_fuel)*(2*length*2*length)
 I3 = 0.5*(m_dry+m_fuel)*radius*radius
 
 # environment
